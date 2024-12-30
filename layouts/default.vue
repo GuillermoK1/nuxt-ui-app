@@ -3,7 +3,10 @@
     <UCard class="mt-10">
       <template #header>
         <div class="flex justify-between items-center">
-          <h1>Welcome to Nuxt UI Starter</h1>
+          <p>Welcome to 
+            <span :class="`text-${color}-500 font-bold`">N</span>uxt<span :class="`text-${color}-500 font-bold`">UI</span>
+            Starter
+          </p>
           <div class="flex gap-2">
             <USelect
               v-model="color"
