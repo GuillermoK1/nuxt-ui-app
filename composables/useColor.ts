@@ -1,5 +1,12 @@
 export const useColor = () => {
-  const color = useState('theme-color', () => 'blue')
+  const nuxtApp = useNuxtApp()
+
+  const color = useState('theme-color', () => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme-color') || 'blue'
+    }
+    return 'blue'
+  })
 
   const colorOptions = [
     { label: 'Gray', value: 'gray' },
@@ -15,8 +22,16 @@ export const useColor = () => {
     { label: 'Pink', value: 'pink' }
   ]
 
+  const setColor = (newColor: string) => {
+    color.value = newColor
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme-color', newColor)
+    }
+  }
+
   return {
     color,
-    colorOptions
+    colorOptions,
+    setColor
   }
 }
