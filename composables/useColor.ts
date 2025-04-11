@@ -1,11 +1,16 @@
 export const useColor = () => {
-  const nuxtApp = useNuxtApp()
-
-  const color = useState('theme-color', () => {
+  const primaryColor = useState('primary-color', () => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme-color') || 'blue'
+      return localStorage.getItem('color-A') || 'blue'
     }
-    return 'blue'
+    return 'indigo'
+  })
+
+  const secondaryColor = useState('secondary-color', () => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('color-B') || 'teal'
+    }
+    return 'emerald'
   })
 
   const colorOptions = [
@@ -22,16 +27,32 @@ export const useColor = () => {
     { label: 'Pink', value: 'pink' }
   ]
 
-  const setColor = (newColor: string) => {
-    color.value = newColor
+  const setPrimaryColor = (newColor: string) => {
+    primaryColor.value = newColor
     if (typeof window !== 'undefined') {
-      localStorage.setItem('theme-color', newColor)
+      localStorage.setItem('color-A', newColor)
+    }
+  }
+
+  const setSecondaryColor = (newColor: string) => {
+    secondaryColor.value = newColor
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('color-B', newColor)
+    }
+  }
+
+  const getColorClass = (color: string) => {
+    return {
+      [`bg-${color}-400`]: true
     }
   }
 
   return {
-    color,
+    primaryColor,
+    secondaryColor,
     colorOptions,
-    setColor
+    setPrimaryColor,
+    setSecondaryColor,
+    getColorClass
   }
 }
